@@ -306,6 +306,10 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
+		
+	  case 'help'
+		sendHelp(senderID);
+		break;
 
       default:
         sendTextMessage(senderID, messageText);
@@ -526,6 +530,24 @@ function sendTextMessage(recipientId, messageText) {
     message: {
       text: messageText,
       metadata: "DEVELOPER_DEFINED_METADATA"
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send commands.
+ *
+ */
+function sendTextMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "image, gif, audio, video, file, button, generic, receipt, quick reply, read receipt, typing on, typing off, account linking"
+      //metadata: "DEVELOPER_DEFINED_METADATA"
     }
   };
 
