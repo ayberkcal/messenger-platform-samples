@@ -8,7 +8,7 @@ module.exports = {
     sendMessage: function (userdId, messageText) {
         var messageData = {
             recipient: {
-                id: recipientId
+                id: userdId
             },
             message: {
                 text: messageText,
