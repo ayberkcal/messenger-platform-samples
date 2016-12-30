@@ -16,7 +16,7 @@ module.exports = {
             }
         };
 
-        callSendAPI(messageData);
+        module.exports.callSendAPI(messageData);
     },
     callSendAPI: function (messageData) {
         request({
