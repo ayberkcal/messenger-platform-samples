@@ -307,7 +307,7 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 		
-	  case 'help'
+	  case 'help':
 		sendHelp(senderID);
 		break;
 
@@ -540,7 +540,7 @@ function sendTextMessage(recipientId, messageText) {
  * Send commands.
  *
  */
-function sendTextMessage(recipientId) {
+function sendHelp(recipientId) {
   var messageData = {
     recipient: {
       id: recipientId
