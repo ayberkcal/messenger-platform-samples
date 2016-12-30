@@ -19,6 +19,8 @@ const
   request = require('request'),
     matchmanager = require('./matchmanager.js');
 
+var constants = require("./constants");
+
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -32,27 +34,27 @@ app.use(express.static('public'));
  */
 
 // App Secret can be retrieved from the App Dashboard
-const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
+constants.APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
   process.env.MESSENGER_APP_SECRET :
   config.get('appSecret');
 
 // Arbitrary value used to validate a webhook
-const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
+constants.VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
 
 // Generate a page access token for your page from the App Dashboard
-const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
+constants.PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
   config.get('pageAccessToken');
 
 // URL where the app is running (include protocol). Used to point to scripts and 
 // assets located at this address. 
-const SERVER_URL = (process.env.SERVER_URL) ?
+constants.SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
+if (!(constants.APP_SECRET && constants.VALIDATION_TOKEN && constants.PAGE_ACCESS_TOKEN && constants.SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
@@ -64,7 +66,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  */
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+      req.query['hub.verify_token'] === constants.VALIDATION_TOKEN) {
     console.log("Validating webhook");
     res.status(200).send(req.query['hub.challenge']);
   } else {
@@ -163,7 +165,7 @@ function verifyRequestSignature(req, res, buf) {
     var method = elements[0];
     var signatureHash = elements[1];
 
-    var expectedHash = crypto.createHmac('sha1', APP_SECRET)
+    var expectedHash = crypto.createHmac('sha1', constants.APP_SECRET)
                         .update(buf)
                         .digest('hex');
 
@@ -372,7 +374,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/rift.png"
+          url: constants.SERVER_URL + "/assets/rift.png"
         }
       }
     }
@@ -394,7 +396,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/instagram_logo.gif"
+          url: constants.SERVER_URL + "/assets/instagram_logo.gif"
         }
       }
     }
@@ -416,7 +418,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: SERVER_URL + "/assets/sample.mp3"
+          url: constants.SERVER_URL + "/assets/sample.mp3"
         }
       }
     }
@@ -438,7 +440,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: SERVER_URL + "/assets/allofus480.mov"
+          url: constants.SERVER_URL + "/assets/allofus480.mov"
         }
       }
     }
@@ -460,7 +462,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: SERVER_URL + "/assets/test.txt"
+          url: constants.SERVER_URL + "/assets/test.txt"
         }
       }
     }
@@ -559,7 +561,7 @@ function sendGenericMessage(recipientId) {
             title: "rift",
             subtitle: "Next-generation virtual reality",
             item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: SERVER_URL + "/assets/rift.png",
+            image_url: constants.SERVER_URL + "/assets/rift.png",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/rift/",
@@ -573,7 +575,7 @@ function sendGenericMessage(recipientId) {
             title: "touch",
             subtitle: "Your Hands, Now in VR",
             item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: SERVER_URL + "/assets/touch.png",
+            image_url: constants.SERVER_URL + "/assets/touch.png",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/touch/",
@@ -620,14 +622,14 @@ function sendReceiptMessage(recipientId) {
             quantity: 1,
             price: 599.00,
             currency: "USD",
-            image_url: SERVER_URL + "/assets/riftsq.png"
+            image_url: constants.SERVER_URL + "/assets/riftsq.png"
           }, {
             title: "Samsung Gear VR",
             subtitle: "Frost White",
             quantity: 1,
             price: 99.99,
             currency: "USD",
-            image_url: SERVER_URL + "/assets/gearvrsq.png"
+            image_url: constants.SERVER_URL + "/assets/gearvrsq.png"
           }],
           address: {
             street_1: "1 Hacker Way",
@@ -760,7 +762,7 @@ function sendAccountLinking(recipientId) {
           text: "Welcome. Link your account.",
           buttons:[{
             type: "account_link",
-            url: SERVER_URL + "/authorize"
+            url: constants.SERVER_URL + "/authorize"
           }]
         }
       }
@@ -778,7 +780,7 @@ function sendAccountLinking(recipientId) {
 function callSendAPI(messageData) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: PAGE_ACCESS_TOKEN },
+    qs: { access_token: constants.PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: messageData
 
