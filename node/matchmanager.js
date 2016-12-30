@@ -23,6 +23,7 @@ module.exports = {
         }
     },
     addToQueue: function (userID) {
+        console.log("try adding to queue %d", userID);
         var match = chatQueue.pop();
         if(match == undefined){
             messagemanager.sendMessage(userID, "Biraz bekle adam bulamadık");
