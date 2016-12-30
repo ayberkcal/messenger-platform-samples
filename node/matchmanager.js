@@ -1,6 +1,9 @@
 /**
  * Created by ayberk on 30.12.2016.
  */
+var user = require("./usermodel");
+var moment = require("moment");
+
 var waitingUsersQueue  = [];
 var chatQueue = [];
 const uuidV4 = require('uuid/v4');
@@ -27,6 +30,7 @@ module.exports = {
         var match = chatQueue.pop();
         if(match == undefined){
             messagemanager.sendMessage(userID, "Biraz bekle adam bulamadık");
+            waitingUsersQueue.push(new user(uuidV4(),userID, moment(new Date())));
         } else {
             messagemanager.sendMessage(userID, "Adam bulduk chat başlıcak");
         }
