@@ -32,7 +32,7 @@ app.use(express.static('public'));
  * set them using environment variables or modifying the config file in /config.
  *
  */
-
+/*
 // App Secret can be retrieved from the App Dashboard
 constants.APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
   process.env.MESSENGER_APP_SECRET :
@@ -52,7 +52,7 @@ constants.PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 // assets located at this address. 
 constants.SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
-  config.get('serverURL');
+  config.get('serverURL');*/
 
 if (!(constants.APP_SECRET && constants.VALIDATION_TOKEN && constants.PAGE_ACCESS_TOKEN && constants.SERVER_URL)) {
   console.error("Missing config values");
