@@ -17,7 +17,7 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-    matcher = require('matcher.js');
+    matcher = require('./matcher.js');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
