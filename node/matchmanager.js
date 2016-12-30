@@ -1,10 +1,10 @@
 /**
  * Created by ayberk on 30.12.2016.
  */
-var activeUsers = [];
-var matchedUsers = []
+var waitinhUsersQueue  = [];
+var chatQueue = [];
 module.exports = {
-    addUser: function (userID) {
+    addToWaiting: function (userID) {
         if(!activeUsers.contains(userID)){
             activeUsers.push(userID);
         }
