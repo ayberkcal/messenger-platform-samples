@@ -16,12 +16,13 @@ module.exports = {
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
         if(match == undefined){
             waitingUsersQueue.push(new user(uuidV4(),userId, moment(new Date())));
-            messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık");
+            messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 1");
         } else {
             if(match.userId == userId){
                 waitingUsersQueue.push(match);
-                messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık");
+                messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 2");
             } else {
+                console.log("Match oldu. UserID1:'%d'  UserID2:'%d'", userId, match.userId);
                 messagemanager.sendMessage(userId, "adam bulduk:'&d'", match.userId);
                 messagemanager.sendMessage(match.userId, "adam bulduk:'&d'", userId);
             }
