@@ -11,7 +11,7 @@ messagemanager = require('./messagemanager.js'),
 
 module.exports = {
     startMatch: function (userId){
-        var match = chatQueue.pop();
+        var match = waitingUsersQueue.pop();
 
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
         if(match == undefined){
