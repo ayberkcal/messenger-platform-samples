@@ -33,9 +33,9 @@ module.exports = {
             messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık");
             waitingUsersQueue.push(new user(uuidV4(),userId, moment(new Date())));
         } else {
-            console.log("match bulundu");
+            console.log("match bulundu. 1-UserID:'%d' 2-UserID:'%d'", userId, match.userId);
             messagemanager.sendMessage(userId, "Adam bulduk chat başlıcak");
-            messagemanager.sendMessage(match, "Adam bulduk chat başlıcak");
+            messagemanager.sendMessage(match.userId, "Adam bulduk chat başlıcak");
         }
     }
 };
