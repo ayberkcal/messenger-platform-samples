@@ -66,6 +66,7 @@ module.exports = {
     },
     sendAttachment: function (userId, attachments) {
         for(var i = 0; i < attachments.length; i++){
+            console.error("attachments[i].type:"+attachments[i].type);
             switch (attachments[i].type){
                 case 'audio':
                 case 'file':
