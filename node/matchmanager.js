@@ -12,6 +12,11 @@ messagemanager = require('./messagemanager.js'),
 
 module.exports = {
     startMatch: function (userId){
+        if(findInChatQueue(userId)){
+            messagemanager.sendMessage(userId, "Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek");
+            return;
+        }
+
         var match = waitingUsersQueue.pop();
 
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
@@ -31,6 +36,19 @@ module.exports = {
                 messagemanager.sendMessage(match.userId, "adam bulduk: '"+newUser.userId+"' - '"+newUser.nickname+"' ");
 
                 chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
+            }
+        }
+    },
+    endChat: function(userId) {
+        var conversation = findInChatQueue(userId);
+        if(conversation == undefined){
+            messagemanager.sendMessage(userId, "dostum zaten chat yapmıyorsun nerden çıkmaya çalışıyorsun?");
+        } else {
+            removeFromChatQueue(userId);
+            if(conversation.first_userId == userId){
+                messagemanager.sendMessage(conversation.first_userId, "dostum konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
+            } else {
+                messagemanager.sendMessage(conversation.second_userId, "dostum "+conversation.second_nickname+" konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
             }
         }
     },
@@ -61,3 +79,20 @@ module.exports = {
         }
     }
 };
+
+function findInChatQueue(userId){
+    for(var i = 0; i < chatQueue.length; i++){
+        if(chatQueue[i].first_userId == userId || chatQueue[i].second_userId == userId){
+            return chatQueue[i];
+        }
+    }
+    return undefined;
+}
+
+function removeFromChatQueue(userId){
+    for(var i = 0; i < chatQueue.length; i++){
+        if(chatQueue[i].first_userId == userId || chatQueue[i].second_userId == userId){
+            chatQueue.splice(i,1);
+        }
+    }
+}
