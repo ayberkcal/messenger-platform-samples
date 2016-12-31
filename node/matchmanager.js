@@ -22,22 +22,18 @@ module.exports = {
         }
         if(findedInQueue == false){
             module.exports.addToQueue(userID);
+        } else {
+            messagemanager.sendMessage(userID, "Dostum biraz beklettik biliyoruz ancak henüz kimse yok. ilk gelenle seni eşleştiricez emin olabilirsin...");
         }
-        //if(!activeUsers.contains(userID)){
-        //    activeUsers.push(userID);
-        //}
     },
     addToQueue: function (userID) {
-        console.log("try adding to queue %d", userID);
-        console.log("2 waitinQueueSize:%d", waitingUsersQueue.length);
         var match = chatQueue.pop();
-        console.log("match:" + match);
         if(match == undefined){
             messagemanager.sendMessage(userID, "Biraz bekle adam bulamadık");
             waitingUsersQueue.push(new user(uuidV4(),userID, moment(new Date())));
         } else {
             messagemanager.sendMessage(userID, "Adam bulduk chat başlıcak");
+            messagemanager.sendMessage(match, "Adam bulduk chat başlıcak");
         }
-        console.log("3 waitinQueueSize:%d", waitingUsersQueue.length);
     }
 };
