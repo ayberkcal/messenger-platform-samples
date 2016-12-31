@@ -23,10 +23,12 @@ module.exports = {
                 waitingUsersQueue.push(match);
                 messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 2");
             } else {
-                console.log("Match oldu. UserID1:'%d'  UserID2:'%d'", userId, match.userId);
-                messagemanager.sendMessage(userId, "adam bulduk:'%d' - '%s'", match.userId, match.nickname);
-                messagemanager.sendMessage(match.userId, "adam bulduk:'%d' - '%s'", userId);
+                console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
+                console.log(match);
+                messagemanager.sendMessage(userId, "adam bulduk: %d  -  %s ", match.userId, match.nickname);
+                messagemanager.sendMessage(match.userId, "adam bulduk: %d  -  %s ", userId);
                 var newUser = new user(new user(uuidV4(),userId, moment(new Date())));
+                console.log(newUser);
                 chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
             }
         }
