@@ -47,8 +47,10 @@ module.exports = {
             removeFromChatQueue(userId);
             if(conversation.first_userId == userId){
                 messagemanager.sendMessage(conversation.first_userId, "dostum konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
+                messagemanager.sendMessage(conversation.second_userId, "dostum "+conversation.second_nickname+" konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
             } else {
-                messagemanager.sendMessage(conversation.second_userId, "dostum "+conversation.second_nickname+" konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
+                messagemanager.sendMessage(conversation.second_userId, "dostum konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
+                messagemanager.sendMessage(conversation.first_userId, "dostum "+conversation.second_nickname+" konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
             }
         }
     },
