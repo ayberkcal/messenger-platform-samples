@@ -2,6 +2,7 @@
  * Created by ayberk on 30.12.2016.
  */
 var user = require("./usermodel");
+var chatmodel= require("./chatmodel");
 var moment = require("moment");
 
 var waitingUsersQueue  = [];
@@ -23,8 +24,10 @@ module.exports = {
                 messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 2");
             } else {
                 console.log("Match oldu. UserID1:'%d'  UserID2:'%d'", userId, match.userId);
-                messagemanager.sendMessage(userId, "adam bulduk:'&d'", match.userId);
-                messagemanager.sendMessage(match.userId, "adam bulduk:'&d'", userId);
+                messagemanager.sendMessage(userId, "adam bulduk:'%d' - '%s'", match.userId, match.nickname);
+                messagemanager.sendMessage(match.userId, "adam bulduk:'%d' - '%s'", userId);
+                var newUser = new user(new user(uuidV4(),userId, moment(new Date())));
+                chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
             }
         }
     },
