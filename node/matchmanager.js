@@ -12,6 +12,7 @@ messagemanager = require('./messagemanager.js'),
 module.exports = {
     addToWaiting: function (userID) {
         var findedInQueue = false;
+        console.log("1 waitinQueueSize:%d", waitingUsersQueue.length);
         for(var i = 0; i < waitingUsersQueue.length; i++){
             console.log("userId:%d", waitingUsersQueue[i].userId);
             if(waitingUsersQueue[i].userId == userID){
@@ -28,6 +29,7 @@ module.exports = {
     },
     addToQueue: function (userID) {
         console.log("try adding to queue %d", userID);
+        console.log("2 waitinQueueSize:%d", waitingUsersQueue.length);
         var match = chatQueue.pop();
         console.log("match:" + match);
         if(match == undefined){
@@ -36,5 +38,6 @@ module.exports = {
         } else {
             messagemanager.sendMessage(userID, "Adam bulduk chat başlıcak");
         }
+        console.log("3 waitinQueueSize:%d", waitingUsersQueue.length);
     }
 };
