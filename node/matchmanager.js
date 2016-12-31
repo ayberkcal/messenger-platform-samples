@@ -64,26 +64,29 @@ module.exports = {
             messagemanager.sendMessage(sendToId, senderNick + ": " + text);
         }
     },
-    sendAttachment: function (userId, attachment) {
-      switch (attachment.type){
-          case 'audio':
-          case 'file':
-          case 'image':
-          case 'video':
-              var conversation = findInChatQueue(userId);
-              if(conversation == undefined){
-                  messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
-              } else {
-                  var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
-                  var senderNick = conversation.first_userId == userId ? conversation.first_nickname : conversation.second_nickname;
-                  messagemanager.sendAttachment(sendToId, attachment.type, attachment.payload);
-                  //messagemanager.sendMessage(sendToId, senderNick + ": " + text);
-              }
-              break;
-          default:
-              messagemanager.sendMessage(userId, "dostum ne gönderdiysen biz onu karşıya gönderemedik. sıçtık.");
-              break;
-      }
+    sendAttachment: function (userId, attachments) {
+        for(var i = 0; i < attachments.length; i++){
+            switch (attachments[i].type){
+                case 'audio':
+                case 'file':
+                case 'image':
+                case 'video':
+                    var conversation = findInChatQueue(userId);
+                    if(conversation == undefined){
+                        messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
+                    } else {
+                        var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
+                        var senderNick = conversation.first_userId == userId ? conversation.first_nickname : conversation.second_nickname;
+                        messagemanager.sendAttachment(sendToId, attachments[i].type, attachments[i].payload);
+                        //messagemanager.sendMessage(sendToId, senderNick + ": " + text);
+                    }
+                    break;
+                default:
+                    messagemanager.sendMessage(userId, "dostum ne gönderdiysen biz onu karşıya gönderemedik. sıçtık.");
+                    break;
+            }
+        }
+
     },
     addToWaiting: function (userId) {
         var findedInQueue = false;
