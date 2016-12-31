@@ -246,7 +246,7 @@ function receivedMessage(event) {
         matchmanager.sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
-    matchmanager.sendAttachmenta(senderID, messageAttachments);
+    matchmanager.sendAttachment(senderID, messageAttachments);
     sendTextMessage(senderID, "Message with attachment received");
   }
 }
