@@ -60,7 +60,7 @@ module.exports = {
             messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
         } else {
             var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
-            var senderNick = conversation.first_userId == userId ? conversation.second_nickname : conversation.nickname;
+            var senderNick = conversation.first_userId == userId ? conversation.first_nickname : conversation.second_nickname;
             messagemanager.sendMessage(sendToId, senderNick + ": " + text);
         }
     },
