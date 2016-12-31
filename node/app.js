@@ -233,17 +233,17 @@ function receivedMessage(event) {
     // the text we received.
     console.log("received message:%s", messageText);
     switch (messageText) {
-      case 'ekle':
+      case '!ekle':
         console.log("ekle geldi");
         matchmanager.startMatch(senderID);
         break;
-      case 'cik':
+      case '!cik':
         console.log("cik geldi");
         matchmanager.endChat(senderID);
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        matchmanager.sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");

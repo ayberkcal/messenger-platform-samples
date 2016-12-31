@@ -54,6 +54,16 @@ module.exports = {
             }
         }
     },
+    sendTextMessage: function(userId, text){
+        var conversation = findInChatQueue(userId);
+        if(conversation == undefined){
+            messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
+        } else {
+            var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
+            var senderNick = conversation.first_userId == userId ? conversation.second_nickname : conversation.nickname;
+            messagemanager.sendMessage(sendToId, senderNick + ": " + text);
+        }
+    },
     addToWaiting: function (userId) {
         var findedInQueue = false;
         for(var i = 0; i < waitingUsersQueue.length; i++){
