@@ -10,11 +10,26 @@ const uuidV4 = require('uuid/v4');
 messagemanager = require('./messagemanager.js'),
 
 module.exports = {
+    startMatch: function (userId){
+        var match = chatQueue.pop();
+
+        //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
+        if(match == undefined){
+            waitingUsersQueue.push(new user(uuidV4(),userId, moment(new Date())));
+            messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık");
+        } else {
+            if(match.userId == userId){
+                waitingUsersQueue.push(match);
+                messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık");
+            } else {
+                messagemanager.sendMessage(userId, "adam bulduk:'&d'", match.userId);
+                messagemanager.sendMessage(match.userId, "adam bulduk:'&d'", userId);
+            }
+        }
+    },
     addToWaiting: function (userId) {
         var findedInQueue = false;
-        console.log("1 waitinQueueSize:%d", waitingUsersQueue.length);
         for(var i = 0; i < waitingUsersQueue.length; i++){
-            console.log("userId:%d", waitingUsersQueue[i].userId);
             if(waitingUsersQueue[i].userId == userId){
                 findedInQueue = true;
                 break;
