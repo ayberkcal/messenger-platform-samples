@@ -13,6 +13,7 @@ module.exports = {
     addToWaiting: function (userID) {
         var findedInQueue = false;
         for(var i = 0; i < waitingUsersQueue.length; i++){
+            console.log("userId:%d", waitingUsersQueue[i].userId);
             if(waitingUsersQueue[i].userId == userID){
                 findedInQueue = true;
                 break;
@@ -28,6 +29,7 @@ module.exports = {
     addToQueue: function (userID) {
         console.log("try adding to queue %d", userID);
         var match = chatQueue.pop();
+        console.log("match:" + match);
         if(match == undefined){
             messagemanager.sendMessage(userID, "Biraz bekle adam bulamadık");
             waitingUsersQueue.push(new user(uuidV4(),userID, moment(new Date())));
