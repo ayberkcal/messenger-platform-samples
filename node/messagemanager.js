@@ -19,6 +19,22 @@ module.exports = {
 
         module.exports.callSendAPI(messageData);
     },
+    sendAttachment: function (userId, type, payload) {
+        var messageData = {
+            recipient: {
+                id: userId
+            },
+            message: {
+                attachment: {
+                    type: type,
+                    payload: {
+                        url: payload
+                    }
+                }
+            }
+        };
+        module.exports.callSendAPI(messageData);
+    },
     callSendAPI: function (messageData) {
         request({
             uri: 'https://graph.facebook.com/v2.6/me/messages',
