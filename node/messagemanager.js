@@ -19,7 +19,7 @@ module.exports = {
 
         module.exports.callSendAPI(messageData);
     },
-    sendAttachment: function (userId, type, payload) {
+    sendAttachment: function (userId, type, payloadUrl) {
         var messageData = {
             recipient: {
                 id: userId
@@ -28,7 +28,7 @@ module.exports = {
                 attachment: {
                     type: type,
                     payload: {
-                        url: payload
+                        url: payloadUrl
                     }
                 }
             }

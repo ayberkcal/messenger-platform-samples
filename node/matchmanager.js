@@ -78,7 +78,7 @@ module.exports = {
                     } else {
                         var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
                         var senderNick = conversation.first_userId == userId ? conversation.first_nickname : conversation.second_nickname;
-                        messagemanager.sendAttachment(sendToId, attachments[i].type, attachments[i].payload);
+                        messagemanager.sendAttachment(sendToId, attachments[i].type, attachments[i].payload.url);
                         //messagemanager.sendMessage(sendToId, senderNick + ": " + text);
                     }
                     break;
