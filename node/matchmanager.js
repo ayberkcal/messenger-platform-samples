@@ -21,11 +21,11 @@ module.exports = {
             }
         }
         if(findedInQueue == false){
-            addToQueue(userID);
+            module.exports.addToQueue(userID);
         }
-        if(!activeUsers.contains(userID)){
-            activeUsers.push(userID);
-        }
+        //if(!activeUsers.contains(userID)){
+        //    activeUsers.push(userID);
+        //}
     },
     addToQueue: function (userID) {
         console.log("try adding to queue %d", userID);

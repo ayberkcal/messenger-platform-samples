@@ -235,7 +235,7 @@ function receivedMessage(event) {
     switch (messageText) {
       case 'ekle':
         console.log("ekle geldi");
-        matchmanager.addToQueue(senderID);
+        matchmanager.addToWaiting(senderID);
         break;
 
       default:
