@@ -25,7 +25,7 @@ module.exports = {
         if (match == undefined) {
             waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date())));
             //messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 1");
-            messagemanager.sendMessage(userId, localize.instance.translate("Hello"));
+            messagemanager.sendMessage(userId, localize.get().translate("Hello"));
         } else {
             if (match.userId == userId) {
                 waitingUsersQueue.push(match);
