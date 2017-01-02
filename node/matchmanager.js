@@ -6,7 +6,7 @@ var user = require("./usermodel"),
     moment = require("moment"),
     graph = require("./graphhelper.js"),
     _localize = require ("localize"),
-    localize = new _localize('/localize/');
+    localize = new _localize('./translations/');
 
 
 var waitingUsersQueue  = [];
@@ -32,8 +32,8 @@ module.exports = {
         if (match == undefined) {
             graph.getUserInfo(userId, function(body){
                 var response = JSON.parse(body)
-
                 var userLang = response.locale.toString().split('_')[0];
+                console.log("userlang:" + userLang);
                 waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date()), userLang));
                 localize.setLocale(userLang);
                 messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 1"));
