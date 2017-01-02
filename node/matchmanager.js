@@ -6,7 +6,7 @@ var user = require("./usermodel"),
     moment = require("moment"),
     graph = require("./graphhelper.js"),
     _localize = require ("localize"),
-    localize = new _localize('./localize/');
+    localize = new _localize('/localize/');
 
 
 var waitingUsersQueue  = [];
