@@ -4,6 +4,7 @@
 var user = require("./usermodel");
 var chatmodel= require("./chatmodel");
 var moment = require("moment");
+var graph = require("./graphhelper.js");
 
 var waitingUsersQueue  = [];
 var chatQueue = [];
@@ -11,52 +12,52 @@ const uuidV4 = require('uuid/v4');
 messagemanager = require('./messagemanager.js'),
 
 module.exports = {
-    startMatch: function (userId){
-        if(findInChatQueue(userId)){
+    startMatch: function (userId) {
+        if (findInChatQueue(userId)) {
             messagemanager.sendMessage(userId, "Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek");
             return;
         }
 
         var match = waitingUsersQueue.pop();
-
+        graph.getUserInfo(userId);
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
-        if(match == undefined){
-            waitingUsersQueue.push(new user(uuidV4(),userId, moment(new Date())));
+        if (match == undefined) {
+            waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date())));
             messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 1");
         } else {
-            if(match.userId == userId){
+            if (match.userId == userId) {
                 waitingUsersQueue.push(match);
                 messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 2");
             } else {
                 console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
                 console.log(match);
-                var newUser = new user(uuidV4(),userId, moment(new Date()));
+                var newUser = new user(uuidV4(), userId, moment(new Date()));
                 console.log(newUser);
-                messagemanager.sendMessage(userId, "adam bulduk: '"+match.userId+"'  -  '"+match.nickname+"' ");
-                messagemanager.sendMessage(match.userId, "adam bulduk: '"+newUser.userId+"' - '"+newUser.nickname+"' ");
+                messagemanager.sendMessage(userId, "adam bulduk: '" + match.userId + "'  -  '" + match.nickname + "' ");
+                messagemanager.sendMessage(match.userId, "adam bulduk: '" + newUser.userId + "' - '" + newUser.nickname + "' ");
 
                 chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
             }
         }
     },
-    endChat: function(userId) {
+    endChat: function (userId) {
         var conversation = findInChatQueue(userId);
-        if(conversation == undefined){
+        if (conversation == undefined) {
             messagemanager.sendMessage(userId, "dostum zaten chat yapmıyorsun nerden çıkmaya çalışıyorsun?");
         } else {
             removeFromChatQueue(userId);
-            if(conversation.first_userId == userId){
+            if (conversation.first_userId == userId) {
                 messagemanager.sendMessage(conversation.first_userId, "dostum konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
-                messagemanager.sendMessage(conversation.second_userId, "dostum "+conversation.second_nickname+" konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
+                messagemanager.sendMessage(conversation.second_userId, "dostum " + conversation.second_nickname + " konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
             } else {
                 messagemanager.sendMessage(conversation.second_userId, "dostum konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
-                messagemanager.sendMessage(conversation.first_userId, "dostum "+conversation.second_nickname+" konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
+                messagemanager.sendMessage(conversation.first_userId, "dostum " + conversation.second_nickname + " konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
             }
         }
     },
-    sendTextMessage: function(userId, text){
+    sendTextMessage: function (userId, text) {
         var conversation = findInChatQueue(userId);
-        if(conversation == undefined){
+        if (conversation == undefined) {
             messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
         } else {
             var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
@@ -65,15 +66,15 @@ module.exports = {
         }
     },
     sendAttachment: function (userId, attachments) {
-        for(var i = 0; i < attachments.length; i++){
-            console.error("attachments[i].type:"+attachments[i].type);
-            switch (attachments[i].type){
+        for (var i = 0; i < attachments.length; i++) {
+            console.error("attachments[i].type:" + attachments[i].type);
+            switch (attachments[i].type) {
                 case 'audio':
                 case 'file':
                 case 'image':
                 case 'video':
                     var conversation = findInChatQueue(userId);
-                    if(conversation == undefined){
+                    if (conversation == undefined) {
                         messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
                     } else {
                         var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
@@ -91,13 +92,13 @@ module.exports = {
     },
     addToWaiting: function (userId) {
         var findedInQueue = false;
-        for(var i = 0; i < waitingUsersQueue.length; i++){
-            if(waitingUsersQueue[i].userId == userId){
+        for (var i = 0; i < waitingUsersQueue.length; i++) {
+            if (waitingUsersQueue[i].userId == userId) {
                 findedInQueue = true;
                 break;
             }
         }
-        if(findedInQueue == false){
+        if (findedInQueue == false) {
             module.exports.addToQueue(userId);
         } else {
             messagemanager.sendMessage(userId, "Dostum biraz beklettik biliyoruz ancak henüz kimse yok. ilk gelenle seni eşleştiricez emin olabilirsin...");
@@ -105,10 +106,10 @@ module.exports = {
     },
     addToQueue: function (userId) {
         var match = chatQueue.pop();
-        if(match == undefined){
+        if (match == undefined) {
             console.log("match bulunmadı");
             messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık");
-            waitingUsersQueue.push(new user(uuidV4(),userId, moment(new Date())));
+            waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date())));
         } else {
             console.log("match bulundu. 1-UserID:'%d' 2-UserID:'%d'", userId, match.userId);
             messagemanager.sendMessage(userId, "Adam bulduk chat başlıcak");
