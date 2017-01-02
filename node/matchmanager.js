@@ -30,10 +30,14 @@ module.exports = {
 
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
         if (match == undefined) {
-            var userLang = graph.getUserInfo(userId).locale.split('_')[0];
-            waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date()), userLang));
-            localize.setLocale(userLang);
-            messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 1"));
+            graph.getUserInfo(userId, function(body){
+                var userLang = body.locale.split('_')[0];
+                waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date()), userLang));
+                localize.setLocale(userLang);
+                messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 1"));
+            });
+            //var userLang = graph.getUserInfo(userId).locale.split('_')[0];
+
         } else {
             if (match.userId == userId) {
                 waitingUsersQueue.push(match);

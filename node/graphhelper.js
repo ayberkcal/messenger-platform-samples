@@ -5,7 +5,7 @@ const request = require('request'),
 constants = require("./constants");
 
 module.exports = {
-    getUserInfo: function(userId){
+    getUserInfo: function(userId, callback){
         console.log("getUserInfo called : %d", userId);
         request({
             uri: 'https://graph.facebook.com/v2.6/' + userId,
@@ -14,7 +14,8 @@ module.exports = {
         }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("body: " + body);
-                return body;
+                callback(body);
+                //return body;
                 //var recipientId = body.recipient_id;
                 //var messageId = body.message_id;
 
