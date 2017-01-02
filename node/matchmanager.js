@@ -44,6 +44,7 @@ module.exports = {
             if (match.userId == userId) {
                 waitingUsersQueue.push(match);
                 localize.setLocale(match.lang);
+                console.log("lang:" + match.lang);
                 messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 2"));
             } else {
                 console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
