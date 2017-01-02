@@ -13,7 +13,7 @@ module.exports = {
             method: 'GET'
         }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log("body: " + body);
+                //console.log("body: " + body);
                 callback(body);
                 //return body;
                 //var recipientId = body.recipient_id;
