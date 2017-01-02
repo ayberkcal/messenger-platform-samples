@@ -5,7 +5,8 @@ var user = require("./usermodel");
 var chatmodel= require("./chatmodel");
 var moment = require("moment");
 var graph = require("./graphhelper.js");
-var localize = require("./localizemanager");
+var _localize = require ("localize");
+var localize = new _localize('./localize/');
 
 var waitingUsersQueue  = [];
 var chatQueue = [];
@@ -25,7 +26,7 @@ module.exports = {
         if (match == undefined) {
             waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date())));
             //messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 1");
-            messagemanager.sendMessage(userId, localize.get().translate("Hello"));
+            messagemanager.sendMessage(userId, localize.translate("Hello"));
         } else {
             if (match.userId == userId) {
                 waitingUsersQueue.push(match);
