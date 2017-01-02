@@ -31,6 +31,7 @@ module.exports = {
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
         if (match == undefined) {
             graph.getUserInfo(userId, function(body){
+                console.log("locale:" +body.locale);
                 var userLang = body.locale.toString().split('_')[0];
                 waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date()), userLang));
                 localize.setLocale(userLang);
