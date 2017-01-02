@@ -8,7 +8,7 @@ module.exports = {
     getUserInfo: function(userId){
         console.log("getUserInfo called : %d", userId);
         request({
-            uri: 'https://graph.facebook.com/v2.6/ + userId',
+            uri: 'https://graph.facebook.com/v2.6/' + userId,
             qs: {access_token: constants.PAGE_ACCESS_TOKEN},
             method: 'GET'
         }, function (error, response, body) {
