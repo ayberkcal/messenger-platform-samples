@@ -1,0 +1,10 @@
+{
+    "Hello": {
+        "tr": "Hoşgeldin...",
+        "en": "Hello..."
+    },
+    "Substitution: $[1]": {
+        "es": "Sustitución: $[1]",
+        "sr": "замена: $[1]"
+    }
+}
