@@ -3,7 +3,7 @@
  */
 // create a unique, global symbol name
 // -----------------------------------
-var localize = require ("localize");
+var localize = require ("./localize");
 
 const LOCALIZE_KEY = Symbol.for("My.justtalk.localizemanager");
 
