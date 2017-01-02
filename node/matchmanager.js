@@ -5,8 +5,8 @@ var user = require("./usermodel"),
     chatmodel= require("./chatmodel"),
     moment = require("moment"),
     graph = require("./graphhelper.js"),
-    _localize = require ("localize"),
-    localize = new _localize('./translations/');
+    _localize = require ("localize");
+
 
 
 var waitingUsersQueue  = [];
@@ -16,6 +16,7 @@ messagemanager = require('./messagemanager.js'),
 
 module.exports = {
     startMatch: function (userId) {
+        localize = new _localize('./translations/');
         var findedInChatQueue = findInChatQueue(userId);
         if (findedInChatQueue != undefined) {
             var userLang = findedInChatQueue.first_user.userId == userId ? findedInChatQueue.first_user.lang : findedInChatQueue.second_user.lang;
