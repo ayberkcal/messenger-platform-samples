@@ -14,6 +14,7 @@ module.exports = {
         }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("body: " + body);
+                return body.locale;
                 //var recipientId = body.recipient_id;
                 //var messageId = body.message_id;
 

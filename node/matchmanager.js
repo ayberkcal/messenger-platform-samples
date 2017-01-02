@@ -1,12 +1,13 @@
 /**
  * Created by ayberk on 30.12.2016.
  */
-var user = require("./usermodel");
-var chatmodel= require("./chatmodel");
-var moment = require("moment");
-var graph = require("./graphhelper.js");
-var _localize = require ("localize");
-var localize = new _localize('./localize/');
+var user = require("./usermodel"),
+    chatmodel= require("./chatmodel"),
+    moment = require("moment"),
+    graph = require("./graphhelper.js"),
+    _localize = require ("localize"),
+    localize = new _localize('./localize/');
+
 
 var waitingUsersQueue  = [];
 var chatQueue = [];
@@ -15,29 +16,38 @@ messagemanager = require('./messagemanager.js'),
 
 module.exports = {
     startMatch: function (userId) {
-        if (findInChatQueue(userId)) {
-            messagemanager.sendMessage(userId, "Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek");
+        var findedInChatQueue = findInChatQueue(userId);
+        if (findedInChatQueue != undefined) {
+            var userLang = findedInChatQueue.first_user.userId == userId ? findedInChatQueue.first_user.lang : findedInChatQueue.second_user.lang;
+            //userLang = userLang.split('_')[0];
+            localize.setLocale(userLang);
+            messagemanager.sendMessage(userId, localize.translate("Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek"));
             return;
         }
 
         var match = waitingUsersQueue.pop();
-        graph.getUserInfo(userId);
+
+
         //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
         if (match == undefined) {
-            waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date())));
-            //messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 1");
-            messagemanager.sendMessage(userId, localize.translate("Hello"));
+            var userLang = graph.getUserInfo(userId).locale.split('_')[0];
+            waitingUsersQueue.push(new user(uuidV4(), userId, moment(new Date()), userLang));
+            localize.setLocale(userLang);
+            messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 1"));
         } else {
             if (match.userId == userId) {
                 waitingUsersQueue.push(match);
-                messagemanager.sendMessage(userId, "Biraz bekle adam bulamadık 2");
+                localize.setLocale(match.lang);
+                messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 2"));
             } else {
                 console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
                 console.log(match);
-                var newUser = new user(uuidV4(), userId, moment(new Date()));
+                var newUser = new user(uuidV4(), userId, moment(new Date()), userLang);
                 console.log(newUser);
-                messagemanager.sendMessage(userId, "adam bulduk: '" + match.userId + "'  -  '" + match.nickname + "' ");
-                messagemanager.sendMessage(match.userId, "adam bulduk: '" + newUser.userId + "' - '" + newUser.nickname + "' ");
+                localize.setLocale(match.lang);
+                messagemanager.sendMessage(userId, localize.translate("adam bulduk '$[1]' - '$[2]'", match.userId, match.nickname));
+                localize.setLocale(newUser.lang);
+                messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
 
                 chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
             }
@@ -123,7 +133,7 @@ module.exports = {
 
 function findInChatQueue(userId){
     for(var i = 0; i < chatQueue.length; i++){
-        if(chatQueue[i].first_userId == userId || chatQueue[i].second_userId == userId){
+        if(chatQueue[i].first_user.userId == userId || chatQueue[i].second_user.userId == userId){
             return chatQueue[i];
         }
     }
