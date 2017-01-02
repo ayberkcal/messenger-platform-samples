@@ -6,13 +6,14 @@ constants = require("./constants");
 
 module.exports = {
     getUserInfo: function(userId){
+        console.log("getUserInfo called : %d", userId);
         request({
             uri: 'https://graph.facebook.com/v2.6/ + userId',
             qs: {access_token: constants.PAGE_ACCESS_TOKEN},
             method: 'GET'
         }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(body);
+                console.log("body: " + body);
                 //var recipientId = body.recipient_id;
                 //var messageId = body.message_id;
 
