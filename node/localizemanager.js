@@ -16,7 +16,7 @@ var hasKey = (globalSymbols.indexOf(LOCALIZE_KEY) > -1);
 
 if (!hasKey){
     global[LOCALIZE_KEY] = {
-        localizeObject : new localize('/localize/localize.json')
+        localizeObject : new localize('./localize/')
     };
 }
 
