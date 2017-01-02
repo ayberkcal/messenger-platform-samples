@@ -16,7 +16,7 @@ messagemanager = require('./messagemanager.js'),
 
 module.exports = {
     startMatch: function (userId) {
-        localize = new _localize('./translations/');
+        var localize = new _localize('./translations/');
         var findedInChatQueue = findInChatQueue(userId);
         if (findedInChatQueue != undefined) {
             var userLang = findedInChatQueue.first_user.userId == userId ? findedInChatQueue.first_user.lang : findedInChatQueue.second_user.lang;
