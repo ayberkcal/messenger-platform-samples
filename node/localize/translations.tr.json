@@ -3,15 +3,15 @@
     "tr": "Hoşgeldin..."
   },
   "Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek": {
-    "tr": "Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek"
+    "tr": "TR:Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek"
   },
-  "Biraz bekle adam bulamadık 1":{
-    "en":"Biraz bekle adam bulamadık 1"
+  "Biraz bekle adam bulamadık 1": {
+    "tr": "TR:Biraz bekle adam bulamadık 1"
   },
-  "Biraz bekle adam bulamadık 2":{
-    "en":"Biraz bekle adam bulamadık 2"
+  "Biraz bekle adam bulamadık 2": {
+    "tr": "TR:Biraz bekle adam bulamadık 2"
   },
-  "adam bulduk '$[1]' - '$[2]'":{
-    "en":"EN:adam bulduk '$[1]' - '$[2]'"
+  "adam bulduk '$[1]' - '$[2]'": {
+    "tr": "EN:adam bulduk '$[1]' - '$[2]'"
   }
 }
