@@ -36,6 +36,28 @@ module.exports = {
         console.log(messageData);
         module.exports.callSendAPI(messageData);
     },
+    sendWelcomeMessage: function (userId, localize){
+        var messageData = {
+            recipient: {
+                id: userId
+            },
+            message: {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "button",
+                        text: "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?",
+                        buttons: [
+                            {
+                                "type": "text",
+                                "title": "Ekle",
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    },
     callSendAPI: function (messageData) {
         request({
             uri: 'https://graph.facebook.com/v2.6/me/messages',

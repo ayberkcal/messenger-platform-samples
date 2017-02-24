@@ -18,5 +18,9 @@
   "adam bulduk '$[1]' - '$[2]'": {
     "tr": "TR:adam bulduk '$[1]' - '$[2]'",
     "en": "EN:adam bulduk '$[1]' - '$[2]'"
+  },
+  "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?" :{
+    "tr": "TR: dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?",
+    "en": "EN: dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?"
   }
 }

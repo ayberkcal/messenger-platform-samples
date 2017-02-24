@@ -17,9 +17,11 @@ messagemanager = require('./messagemanager.js'),
 module.exports = {
     startMatch: function (userId) {
         var localize = new _localize('./translations/', undefined, "tr");
-        var findedInChatQueue = findInChatQueue(userId);
-        if (findedInChatQueue != undefined) {
-            var userLang = findedInChatQueue.first_user.userId == userId ? findedInChatQueue.first_user.lang : findedInChatQueue.second_user.lang;
+        var findInChatQueue = findInChatQueue(userId);
+
+        //match bulunursa gönderiyoruz mesjaı
+        if (findInChatQueue != undefined) {
+            var userLang = findInChatQueue.first_user.userId == userId ? findInChatQueue.first_user.lang : findInChatQueue.second_user.lang;
             //userLang = userLang.split('_')[0];
             localize.setLocale(userLang);
             messagemanager.sendMessage(userId, localize.translate("Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek"));
@@ -79,7 +81,8 @@ module.exports = {
     sendTextMessage: function (userId, text) {
         var conversation = findInChatQueue(userId);
         if (conversation == undefined) {
-            messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
+            messagemanager.sendWelcomeMessage(userId, undefined);
+            //messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
         } else {
             var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
             var senderNick = conversation.first_userId == userId ? conversation.first_nickname : conversation.second_nickname;
