@@ -42,19 +42,14 @@ module.exports = {
                 id: userId
             },
             message: {
-                attachment: {
-                    type: "template",
-                    payload: {
-                        template_type: "button",
-                        text: "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?",
-                        buttons: [
-                            {
-                                "type": "text",
-                                "title": "Ekle",
-                            }
-                        ]
+                text: "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?",
+                "quick_replies": [
+                    {
+                        "content_type": "text",
+                        "title": "Ekle",
+                        "payload": "!ekle"
                     }
-                }
+                ]
             }
         }
         module.exports.callSendAPI(messageData);
