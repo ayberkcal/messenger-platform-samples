@@ -57,6 +57,7 @@ module.exports = {
                 }
             }
         }
+        module.exports.callSendAPI(messageData);
     },
     callSendAPI: function (messageData) {
         request({
