@@ -42,14 +42,28 @@ module.exports = {
                 id: userId
             },
             message: {
-                text: "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?",
-                "quick_replies": [
+                //text: "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?",
+                "attachment":{
+                    "type":"template",
+                    "payload":{
+                        "template_type":"button",
+                        "text":"What do you want to do next?",
+                        "buttons":[
+                            {
+                                "type":"postback",
+                                "title":"Start Chatting",
+                                "payload":"Start"
+                            }
+                        ]
+                    }
+                }
+                /*"quick_replies": [
                     {
                         "content_type": "text",
                         "title": "Ekle",
                         "payload": "!ekle"
                     }
-                ]
+                ]*/
             }
         }
         module.exports.callSendAPI(messageData);
