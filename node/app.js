@@ -8,8 +8,8 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-    matchmanager = require('./matchmanager.js'),
-    _nicknamemanager = require("./nicknamemanager");
+    matchmanager = require('./matchmanager.js');
+    //_nicknamemanager = require("./nicknamemanager");
 
 var constants = require("./constants");
 
@@ -782,7 +782,7 @@ function callSendAPI(messageData) {
 });*/
 
 app.listen(5000, function() {
-  _nicknamemanager.loadNickNames();
+  //_nicknamemanager.loadNickNames();
   console.log('Node app is running on port', app.get('port'));
 });
 
