@@ -8,7 +8,8 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-    matchmanager = require('./matchmanager.js');
+    matchmanager = require('./matchmanager.js'),
+    _nicknamemanager = require("./nicknamemanager");
 
 var constants = require("./constants");
 
@@ -775,6 +776,7 @@ function callSendAPI(messageData) {
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
 app.listen(app.get('port'), function() {
+  _nicknamemanager.loadNickNames();
   console.log('Node app is running on port', app.get('port'));
 });
 
