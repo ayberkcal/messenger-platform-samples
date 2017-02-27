@@ -4,53 +4,22 @@
 
 var constants = require("./constants");
 
-var reader = require ("buffered-reader");
-var BinaryReader = reader.BinaryReader;
-var DataReader = reader.DataReader
+const fs = require("fs");
+var split = require('split');
 
 var nickList = [];
 module.exports = {
-    loadNickNames : function () {
+    loadNickNames: function () {
         console.log("Start loading nicknames");
 
-        var close = function (binaryReader, error){
-            if (error) console.log (error);
-            console.log("Nicknames loaded!");
-
-            binaryReader.close (function (error){
-                if (error) console.log (error);
-            });
-        };
-        new DataReader (constants.NICKNAME_FILE_NAME, { encoding: "utf8" })
-            .on ("error", function (error){
-                console.log (error);
-            })
-            .on ("line", function (line, nextByteOffset){
+        fs.createReadStream('./' + constants.NICKNAME_FILE_NAME)
+            .pipe(split())
+            .on('data', function (line) {
                 nickList.push(line);
-                //if (line === "Phasellus ultrices ligula sed odio ultricies egestas."){
-                    offset = nextByteOffset;
-                //    this.interrupt ();
-                //}
-            })
-            .on ("end", function (){
-                /*new BinaryReader (constants.NICKNAME_FILE_NAME)
-                    .seek (offset, function (error){
-                        if (error) return close (this, error);
-
-                        this.read (9, function (error, bytes, bytesRead){
-                            if (error) return close (this, error);
-
-                            console.log (bytes.toString ()); //Prints: Curabitur
-
-                            close (this);
-                        });
-                    });*/
-                close(this);
-            })
-            .read ();
+            });
 
     },
-    getNickName : function () {
+    getNickName: function () {
         var randomIndex = Math.random() * (nickList.size - 0) + 0;
         return nickList[randomIndex];
     }
