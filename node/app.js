@@ -780,7 +780,7 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-server.listen(5000, function() {
+app.listen(5000, function() {
   _nicknamemanager.loadNickNames();
   console.log('Node app is running on port', app.get('port'));
 });
