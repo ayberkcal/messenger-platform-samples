@@ -5,8 +5,8 @@ var user = require("./usermodel"),
     chatmodel= require("./chatmodel"),
     moment = require("moment"),
     graph = require("./graphhelper.js"),
-    _localize = require ("localize"),
-    _nicknamemanager= require("./nicknamemanager");
+    _localize = require ("localize");
+    //_nicknamemanager= require("./nicknamemanager");
 
 
 
