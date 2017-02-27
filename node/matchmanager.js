@@ -6,7 +6,7 @@ var user = require("./usermodel"),
     moment = require("moment"),
     graph = require("./graphhelper.js"),
     _localize = require ("localize");
-    //_nicknamemanager= require("./nicknamemanager");
+
 
 
 

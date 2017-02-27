@@ -9,7 +9,6 @@ const
   https = require('https'),  
   request = require('request'),
     matchmanager = require('./matchmanager.js');
-  //  _nicknamemanager = require("./nicknamemanager");
 
 var constants = require("./constants");
 
