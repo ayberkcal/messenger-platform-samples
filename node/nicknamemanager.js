@@ -28,7 +28,7 @@ module.exports = {
             .on ("line", function (line, nextByteOffset){
                 nickList.push(line);
                 //if (line === "Phasellus ultrices ligula sed odio ultricies egestas."){
-                //    offset = nextByteOffset;
+                    offset = nextByteOffset;
                 //    this.interrupt ();
                 //}
             })
