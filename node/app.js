@@ -780,11 +780,11 @@ app.listen(app.get('port'), function() {
   _nicknamemanager.loadNickNames();
   console.log('Node app is running on port', app.get('port'));
 });
-/*
+
 app.listen(5000, function() {
-  //_nicknamemanager.loadNickNames();
+  _nicknamemanager.loadNickNames();
   console.log('Node app is running on port', app.get('port'));
-});*/ 
+});
 
 module.exports = app;
 
