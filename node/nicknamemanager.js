@@ -33,7 +33,7 @@ module.exports = {
                 //}
             })
             .on ("end", function (){
-                new BinaryReader (constants.NICKNAME_FILE_NAME)
+                /*new BinaryReader (constants.NICKNAME_FILE_NAME)
                     .seek (offset, function (error){
                         if (error) return close (this, error);
 
@@ -44,7 +44,8 @@ module.exports = {
 
                             close (this);
                         });
-                    });
+                    });*/
+                close(this);
             })
             .read ();
 
