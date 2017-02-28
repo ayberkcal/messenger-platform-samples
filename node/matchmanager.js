@@ -18,7 +18,7 @@ messagemanager = require('./messagemanager.js'),
 module.exports = {
     startMatch: function (userId) {
         var localize = new _localize('./translations/', undefined, "tr");
-        var findInChatQueue = findInChatQueue(userId);
+        var findInChatQueue = this.findInChatQueue(userId);
 
         //match bulunursa gönderiyoruz mesjaı
         if (findInChatQueue != undefined) {
@@ -65,11 +65,11 @@ module.exports = {
         }
     },
     endChat: function (userId) {
-        var conversation = findInChatQueue(userId);
+        var conversation = this.findInChatQueue(userId);
         if (conversation == undefined) {
             messagemanager.sendMessage(userId, "dostum zaten chat yapmıyorsun nerden çıkmaya çalışıyorsun?");
         } else {
-            removeFromChatQueue(userId);
+            this.removeFromChatQueue(userId);
             if (conversation.first_userId == userId) {
                 messagemanager.sendMessage(conversation.first_userId, "dostum konuşmadan çıktın.Tekrar konuşmak için /ekle yaz...");
                 messagemanager.sendMessage(conversation.second_userId, "dostum " + conversation.second_nickname + " konuşmadan çıktı. Tekrar konuşmak için /ekle yaz...");
@@ -80,7 +80,7 @@ module.exports = {
         }
     },
     sendTextMessage: function (userId, text) {
-        var conversation = findInChatQueue(userId);
+        var conversation = this.findInChatQueue(userId);
         if (conversation == undefined) {
             messagemanager.sendWelcomeMessage(userId, undefined);
             //messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
@@ -98,7 +98,7 @@ module.exports = {
                 case 'file':
                 case 'image':
                 case 'video':
-                    var conversation = findInChatQueue(userId);
+                    var conversation = this.(userId);
                     if (conversation == undefined) {
                         messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
                     } else {
@@ -140,10 +140,29 @@ module.exports = {
             messagemanager.sendMessage(userId, "Adam bulduk chat başlıcak");
             messagemanager.sendMessage(match.userId, "Adam bulduk chat başlıcak");
         }
+    },
+    findInChatQueue: function(userId){
+        console.log("findInChat quueue");
+        for(var i = 0; i < chatQueue.length; i++){
+            console.log("findInChat quueue FOR");
+            if(chatQueue[i].first_user.userId == userId || chatQueue[i].second_user.userId == userId){
+                return chatQueue[i];
+            }
+        }
+        console.log("findInChat quueue UNDEFINED");
+        return undefined;
+    },
+    removeFromChatQueue: function(userId) {
+        for (var i = 0; i < chatQueue.length; i++) {
+            if (chatQueue[i].first_userId == userId || chatQueue[i].second_userId == userId) {
+                chatQueue.splice(i, 1);
+            }
+        }
     }
 };
 
-function findInChatQueue(userId){
+
+/*function findInChatQueue(userId){
     console.log("findInChat quueue");
     for(var i = 0; i < chatQueue.length; i++){
         console.log("findInChat quueue FOR");
@@ -161,4 +180,4 @@ function removeFromChatQueue(userId){
             chatQueue.splice(i,1);
         }
     }
-}
+}*/
