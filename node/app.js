@@ -8,12 +8,14 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-    matchmanager = require('./matchmanager.js');
+    matchmanager = require('./matchmanager.js'),
+    _nicknamemanager = require("./nicknamemanager");
 
 var constants = require("./constants");
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
+console.log("PORT:"+app.get("port"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
@@ -774,8 +776,13 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
-app.listen(app.get('port'), function() {
-  //_nicknamemanager.loadNickNames();
+/*app.listen(app.get('port'), function() {
+  _nicknamemanager.loadNickNames();
+  console.log('Node app is running on port', app.get('port'));
+});*/
+
+app.listen(5000, function() {
+  _nicknamemanager.loadNickNames();
   console.log('Node app is running on port', app.get('port'));
 });
 
