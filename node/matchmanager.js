@@ -19,8 +19,8 @@ module.exports = {
     startMatch: function (userId) {
         try {
             console.log("startMatch userId:" + userId);
-            //var localize = new _localize('./translations/', undefined, "tr");
-            var findInChatQueue = findInChatQueue(userId);
+            var localize = new _localize('./translations/', undefined, "tr");
+            var findInChatQueue = this.findInChatQueue(userId);
 
             //match bulunursa gönderiyoruz mesjaı
             if (findInChatQueue != undefined) {
@@ -146,18 +146,29 @@ module.exports = {
             messagemanager.sendMessage(userId, "Adam bulduk chat başlıcak");
             messagemanager.sendMessage(match.userId, "Adam bulduk chat başlıcak");
         }
+    },
+    findInChatQueue : function (userId) {
+        console.log("findInChat queue");
+        for(var i = 0; i < chatQueue.length; i++){
+            console.log("findInChat queue FOR");
+            if(chatQueue[i].first_user.userId == userId || chatQueue[i].second_user.userId == userId){
+                return chatQueue[i];
+            }
+        }
+        console.log("findInChat queue UNDEFINED");
+        return undefined;
     }
 };
 
 function findInChatQueue(userId){
-    console.log("findInChat quueue");
+    console.log("findInChat queue");
     for(var i = 0; i < chatQueue.length; i++){
-        console.log("findInChat quueue FOR");
+        console.log("findInChat queue FOR");
         if(chatQueue[i].first_user.userId == userId || chatQueue[i].second_user.userId == userId){
             return chatQueue[i];
         }
     }
-    console.log("findInChat quueue UNDEFINED");
+    console.log("findInChat queue UNDEFINED");
     return undefined;
 }
 
