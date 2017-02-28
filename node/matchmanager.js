@@ -5,8 +5,8 @@ var user = require("./usermodel"),
     chatmodel= require("./chatmodel"),
     moment = require("moment"),
     graph = require("./graphhelper.js"),
-    _localize = require ("localize");
-
+    _localize = require ("localize"),
+    _nicknamemanager= require("./nicknamemanager");
 
 
 
@@ -34,6 +34,7 @@ module.exports = {
             var match = waitingUsersQueue.pop();
 
 
+<<<<<<< HEAD
             //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
             if (match == undefined) {
                 graph.getUserInfo(userId, function (body) {
@@ -45,8 +46,22 @@ module.exports = {
                     messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 1"));
                 });
                 //var userLang = graph.getUserInfo(userId).locale.split('_')[0];
+=======
+        //match bulunamazsa veya kendini bulursa tekrar listeye push etmemiz gerekiyor
+        if (match == undefined) {
+            graph.getUserInfo(userId, function(body){
+                var response = JSON.parse(body)
+                var userLang = response.locale.toString().split('_')[0];
+                console.log("userlang:" + userLang);
+                waitingUsersQueue.push(new user(/*_nicknamemanager.getNickName()*/ uuidV4(), userId, moment(new Date()), userLang));
+                localize.setLocale(userLang);
+                messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 1"));
+            });
+            //var userLang = graph.getUserInfo(userId).locale.split('_')[0];
+>>>>>>> parent of 1d77ee8... fix
 
             } else {
+<<<<<<< HEAD
                 if (match.userId == userId) {
                     waitingUsersQueue.push(match);
                     localize.setLocale(match.lang);
@@ -61,6 +76,16 @@ module.exports = {
                     messagemanager.sendMessage(userId, localize.translate("adam bulduk '$[1]' - '$[2]'", match.userId, match.nickname));
                     localize.setLocale(newUser.lang);
                     messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
+=======
+                console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
+                console.log(match);
+                var newUser = new user(uuidV4(), userId, moment(new Date()), userLang);
+                console.log(newUser);
+                localize.setLocale(match.lang);
+                messagemanager.sendMessage(userId, localize.translate("adam bulduk '$[1]' - '$[2]'", match.userId, match.nickname));
+                localize.setLocale(newUser.lang);
+                messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
+>>>>>>> parent of 1d77ee8... fix
 
                     chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
                 }
