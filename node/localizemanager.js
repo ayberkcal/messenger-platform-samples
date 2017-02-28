@@ -5,7 +5,7 @@
 var _localize = require ("localize");
 
 module.exports = {
-    localize: function (message, lang) {
+    translate: function (message, lang) {
         if(lang == undefined)
             lang = "tr";
 

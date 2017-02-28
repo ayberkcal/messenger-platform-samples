@@ -18,6 +18,8 @@ module.exports = {
                 nickList.push(line);
             });
 
+        console.log("Loading completed!")
+
     },
     getNickName: function () {
         var randomIndex = Math.random() * (nickList.size - 0) + 0;
