@@ -53,6 +53,7 @@ module.exports = {
             } else {
                 console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
                 console.log(match);
+                var userLang = graph.getUserInfo(userId).locale.split('_')[0];
                 var newUser = new user(_nicknamemanager.getNickName(), userId, moment(new Date()), userLang);
                 console.log(newUser);
                 localize.setLocale(match.lang);
