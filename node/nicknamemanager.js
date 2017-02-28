@@ -23,6 +23,7 @@ module.exports = {
     },
     getNickName: function () {
         var randomIndex = Math.random() * (nickList.size - 0) + 0;
+        console.log("Random Nick:'"+nickList[randomIndex]+"' Index:'"+randomIndex+"'");
         return nickList[randomIndex];
     }
 }
