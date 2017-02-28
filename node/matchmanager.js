@@ -53,15 +53,20 @@ module.exports = {
             } else {
                 console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
                 console.log(match);
-                var userLang = graph.getUserInfo(userId).locale.split('_')[0];
-                var newUser = new user(_nicknamemanager.getNickName(), userId, moment(new Date()), userLang);
-                console.log(newUser);
-                localize.setLocale(match.lang);
-                messagemanager.sendMessage(userId, localize.translate("adam bulduk '$[1]' - '$[2]'", match.userId, match.nickname));
-                localize.setLocale(newUser.lang);
-                messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
+                graph.getUserInfo(userId, function(body) {
+                    var response = JSON.parse(body)
+                    var userLang = response.locale.toString().split('_')[0];
+                    var newUser = new user(_nicknamemanager.getNickName(), userId, moment(new Date()), userLang);
+                    console.log(newUser);
+                    localize.setLocale(match.lang);
+                    messagemanager.sendMessage(userId, localize.translate("adam bulduk '$[1]' - '$[2]'", match.userId, match.nickname));
+                    localize.setLocale(newUser.lang);
+                    messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
 
-                chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
+                    chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
+                });
+                //var userLang = graph.getUserInfo(userId).locale.split('_')[0];
+
             }
         }
     },
