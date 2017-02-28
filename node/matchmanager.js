@@ -19,7 +19,7 @@ module.exports = {
     startMatch: function (userId) {
         try {
             console.log("startMatch userId:" + userId);
-            var localize = new _localize('./translations/', undefined, "tr");
+            //var localize = new _localize('./translations/', undefined, "tr");
             var findInChatQueue = findInChatQueue(userId);
 
             //match bulunursa gönderiyoruz mesjaı
@@ -27,7 +27,7 @@ module.exports = {
                 var userLang = findInChatQueue.first_user.userId == userId ? findInChatQueue.first_user.lang : findInChatQueue.second_user.lang;
                 //userLang = userLang.split('_')[0];
                 localize.setLocale(userLang);
-                messagemanager.sendMessage(userId, localize.translate("Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek"));
+                messagemanager.sendMessage(userId, "Dostum hali hazırda birisiyle konuşuyorsun o yüzden önce konuşmadan çıkman gerek");
                 return;
             }
 
