@@ -73,7 +73,7 @@ app.post('/webhook', function (req, res) {
         } else if (messagingEvent.read) {
           //receivedMessageRead(messagingEvent);
         } else if (messagingEvent.account_linking) {
-          /receivedAccountLink(messagingEvent);
+          //receivedAccountLink(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
