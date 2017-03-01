@@ -63,7 +63,8 @@ module.exports = {
                     localize.setLocale(newUser.lang);
                     messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
 
-                    chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
+                    //chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
+                    chatQueue.push(new chatmodel(match, newUser));
                     console.log("ChatQueue ekleme yapıldı. ChatQueue Size:" + chatQueue.length);
                 });
                 //var userLang = graph.getUserInfo(userId).locale.split('_')[0];
