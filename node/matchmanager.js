@@ -95,6 +95,7 @@ module.exports = {
         } else {
             var sendToId = conversation.first_userId == userId ? conversation.second_userId : conversation.first_userId;
             var senderNick = conversation.first_userId == userId ? conversation.first_nickname : conversation.second_nickname;
+            console.log("Send Message To (Send To id: ''| Sender Nick: '')", sendToId, senderNick);
             messagemanager.sendMessage(sendToId, senderNick + ": " + text);
         }
     },
