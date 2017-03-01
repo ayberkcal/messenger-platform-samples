@@ -49,7 +49,7 @@ module.exports = {
                 waitingUsersQueue.push(match);
                 localize.setLocale(match.lang);
                 console.log("lang:" + match.lang);
-                messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık 2"));
+                messagemanager.sendMessage(userId, localize.translate("Biraz bekle adam bulamadık (kendini buldu)"));
             } else {
                 console.log("Match oldu. UserID1: %d  UserID2: %d ", userId, match.userId);
                 console.log(match);
@@ -64,6 +64,7 @@ module.exports = {
                     messagemanager.sendMessage(match.userId, localize.translate("adam bulduk '$[1]' - '$[2]'", newUser.userId, newUser.nickname));
 
                     chatQueue.push(new chatmodel(match.nickname, match.userId, newUser.nickname, newUser.userId));
+                    console.log("ChatQueue ekleme yapıldı. ChatQueue Size:" + chatQueue.length);
                 });
                 //var userLang = graph.getUserInfo(userId).locale.split('_')[0];
 
@@ -154,6 +155,7 @@ function findInChatQueue(userId){
     //console.log("findInChat quueue");
     for(var i = 0; i < chatQueue.length; i++){
         //console.log("findInChat quueue FOR");
+        console.log(chatQueue[i]);
         if(chatQueue[i].first_user.userId == userId || chatQueue[i].second_user.userId == userId){
             return chatQueue[i];
         }
