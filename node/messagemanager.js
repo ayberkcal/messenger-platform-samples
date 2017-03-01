@@ -47,11 +47,11 @@ module.exports = {
                     "type":"template",
                     "payload":{
                         "template_type":"button",
-                        "text":"What do you want to do next?",
+                        //"text":"What do you want to do next?",
                         "buttons":[
                             {
                                 "type":"postback",
-                                "title":"Start Chatting",
+                                "title":"!Başla",
                                 "payload":"Start"
                             }
                         ]

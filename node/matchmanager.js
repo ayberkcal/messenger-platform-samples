@@ -12,7 +12,6 @@ var user = require("./usermodel"),
 
 var waitingUsersQueue  = [];
 var chatQueue = [];
-const uuidV4 = require('uuid/v4');
 messagemanager = require('./messagemanager.js'),
 
 module.exports = {
@@ -90,8 +89,8 @@ module.exports = {
     sendTextMessage: function (userId, text) {
         var conversation = findInChatQueue(userId);
         if (conversation == undefined) {
-            //messagemanager.sendWelcomeMessage(userId, undefined);
-            messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
+            messagemanager.sendWelcomeMessage(userId, undefined);
+            //messagemanager.sendMessage(userId, "dostum biriyle konuşmak istiyorsan !ekle yaz ve bekle...?");
         } else {
             var sendToId = conversation.first_user.userId == userId ? conversation.second_user.userId  : conversation.first_user.userId;
             var senderNick = conversation.first_user.userId == userId ? conversation.first_user.nickname :  conversation.second_user.nickname;
