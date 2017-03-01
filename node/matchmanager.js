@@ -150,14 +150,15 @@ module.exports = {
 };
 
 function findInChatQueue(userId){
-    console.log("findInChat quueue");
+    console.log("ChatQueueSize:" + chatQueue.length);
+    //console.log("findInChat quueue");
     for(var i = 0; i < chatQueue.length; i++){
-        console.log("findInChat quueue FOR");
+        //console.log("findInChat quueue FOR");
         if(chatQueue[i].first_user.userId == userId || chatQueue[i].second_user.userId == userId){
             return chatQueue[i];
         }
     }
-    console.log("findInChat quueue UNDEFINED");
+    //console.log("findInChat quueue UNDEFINED");
     return undefined;
 }
 

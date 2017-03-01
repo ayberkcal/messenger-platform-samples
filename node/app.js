@@ -15,7 +15,6 @@ var constants = require("./constants");
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
-console.log("PORT:"+app.get("port"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
@@ -193,7 +192,7 @@ function receivedMessage(event) {
 
   console.log("Received message for user %d and page %d at %d with message:",
       senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
+  //console.log(JSON.stringify(message));
 
   var isEcho = message.is_echo;
   var messageId = message.mid;
