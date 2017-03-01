@@ -47,11 +47,11 @@ module.exports = {
                     "type":"template",
                     "payload":{
                         "template_type":"button",
-                        //"text":"What do you want to do next?",
+                        "text": "Message from Just Talk:\n Şu anda kimse ile eşli değilsin. Eşleşmek için '!ekle' yazabilirsin.",
                         "buttons":[
                             {
                                 "type":"postback",
-                                "title":"!Başla",
+                                "title":"!Ekle",
                                 "payload":"Start"
                             }
                         ]
